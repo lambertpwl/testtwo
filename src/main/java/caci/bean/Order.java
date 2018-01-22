@@ -1,12 +1,17 @@
 package caci.bean;
 
 public class Order {
+	public static final String ORDER_STATE_CREATED		= "created";
+	public static final String ORDER_STATE_DISPATCHED 	= "dispatched";
+	
 	private Integer orderReference;
 	private Integer noOfBricks;
+	private String state;
 	
 	public Order(int orderReference, int noOfBricks) {
 		setOrderReference(orderReference);
 		setNoOfBricks(noOfBricks);
+		setState(ORDER_STATE_CREATED);
 	}
 	
 	public void setNoOfBricks(int noOfBricks) {
@@ -25,12 +30,16 @@ public class Order {
 		return this.orderReference;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((orderReference == null) ? 0 : orderReference.hashCode());
-		return result;
+	public void fulfilOrder() {
+		setState(ORDER_STATE_DISPATCHED);
+	}
+	
+	private void setState(String state) {
+		this.state = state;
+	}
+	
+	public String getState() {
+		return this.state;
 	}
 
 	@Override
@@ -48,6 +57,10 @@ public class Order {
 		} else if (!orderReference.equals(other.orderReference))
 			return false;
 		return true;
+	}
+
+	public boolean isFulfilled() {
+		return (getState().equals(ORDER_STATE_DISPATCHED) ? true : false);
 	}
 	
 }

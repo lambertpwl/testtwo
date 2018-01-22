@@ -48,12 +48,25 @@ public class OrderManager {
 		}
 	}
 	
-	public Order updateOrder(int orderReference, int noOfBricks) {
+	public boolean updateOrder(int orderReference, int noOfBricks) {
+		boolean orderUpdated = false;
 		Order order = retrieveOrder(orderReference);
-		if (order != null) {
+		if (order != null && order.isFulfilled() == false) {
 			order.setNoOfBricks(noOfBricks);
 			updateOrder(order);
+			orderUpdated = true;
 		}
-		return order;
+		return orderUpdated;
+	}
+	
+	public boolean fulfilOrder(int orderReference) {
+		boolean fulfilled = false;
+		Order order = retrieveOrder(orderReference);
+		if (order != null) {
+			order.fulfilOrder();
+			updateOrder(order);
+			fulfilled = true;
+		}
+		return fulfilled;
 	}
 }
