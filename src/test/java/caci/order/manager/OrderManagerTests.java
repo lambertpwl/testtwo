@@ -30,13 +30,12 @@ public class OrderManagerTests {
 	public void testUpdateOrder() {
 		OrderManager orderManager = new OrderManager();
 		Order order = orderManager.createOrder(20);
-
-		order.setNoOfBricks(30);
 		
-		orderManager.updateOrder(order);
+		orderManager.updateOrder(order.getOrderReference(), 30);
 		
 		assertThat(orderManager.retrieveOrders().size(), is(1));
 		assertThat(orderManager.retrieveOrders().get(0).getNoOfBricks(), is(order.getNoOfBricks()));
+		assertThat(orderManager.retrieveOrders().get(0).getNoOfBricks(), is(30));
 	}
 
 	@Test

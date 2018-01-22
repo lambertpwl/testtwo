@@ -38,6 +38,21 @@ public class OrderService {
 		return order.getOrderReference();
     }
     
+	@RequestMapping(method = RequestMethod.POST, value = "/updateOrder")
+	@ResponseBody
+	public int updateOrder(@RequestParam("orderReference") int orderReference, @RequestParam("noOfBricks") int noOfBricks) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("START updateOrder()");
+		}
+		
+		Order order = orderManager.updateOrder(orderReference, noOfBricks);
+		
+		if (logger.isDebugEnabled()) {
+			logger.debug("END updateOrder()");
+		}
+		return order.getOrderReference();
+	}
+
 	@RequestMapping(method = RequestMethod.GET, value = "/retrieveOrder")
 	@ResponseBody
 	public Order retrieveOrder(@RequestParam("orderReference") int orderReference) {

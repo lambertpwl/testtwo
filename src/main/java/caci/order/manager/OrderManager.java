@@ -16,14 +16,6 @@ public class OrderManager {
 	public OrderManager() {
 		orders = new ArrayList<>();
 	}
-	public void updateOrder(Order order) {
-		if (orders.contains(order)) {
-			orders.remove(order);
-			orders.add(order);
-		} else {
-			orders.add(order);
-		}
-	}
 	
 	public Order createOrder(int noOfBricks) {
 		Order order = new Order(orderReference++, noOfBricks);
@@ -43,6 +35,24 @@ public class OrderManager {
 			if (loopOrder.getOrderReference() == orderReference) {
 				order = loopOrder;
 			}
+		}
+		return order;
+	}
+	
+	private void updateOrder(Order order) {
+		if (orders.contains(order)) {
+			orders.remove(order);
+			orders.add(order);
+		} else {
+			orders.add(order);
+		}
+	}
+	
+	public Order updateOrder(int orderReference, int noOfBricks) {
+		Order order = retrieveOrder(orderReference);
+		if (order != null) {
+			order.setNoOfBricks(noOfBricks);
+			updateOrder(order);
 		}
 		return order;
 	}
