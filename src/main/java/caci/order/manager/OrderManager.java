@@ -10,7 +10,7 @@ import caci.bean.Order;
 
 @Component
 public class OrderManager {
-	private static int orderReference = 1;
+	private int orderReference = 1;
 	private final ArrayList<Order> orders;
 	
 	public OrderManager() {
@@ -25,7 +25,7 @@ public class OrderManager {
 	}
 	
 	public List<Order> retrieveOrders() {
-		return (List<Order>) Collections.unmodifiableList(orders);
+		return Collections.unmodifiableList(orders);
 	}
 	
 	public Order retrieveOrder(int orderReference) {
@@ -51,7 +51,7 @@ public class OrderManager {
 	public boolean updateOrder(int orderReference, int noOfBricks) {
 		boolean orderUpdated = false;
 		Order order = retrieveOrder(orderReference);
-		if (order != null && order.isFulfilled() == false) {
+		if (order != null && !order.isFulfilled()) {
 			order.setNoOfBricks(noOfBricks);
 			updateOrder(order);
 			orderUpdated = true;
